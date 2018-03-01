@@ -1,7 +1,9 @@
-var express = require('express');
-var app = express();
-var fs = require('fs');
-var path = require('path');
+const express = require('express');
+const app = express();
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+const dotenv = require('dotenv').config()
 //missing import body parser 
 var bodyParser = require('body-parser');
 
@@ -33,6 +35,10 @@ app.post('/favorites', function(req, res){
   res.send(data);
 });
 
+
+
+
 app.listen(3000, function(){
   console.log("Listening on port 3000");
 });
+
