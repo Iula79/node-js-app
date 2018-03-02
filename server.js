@@ -3,7 +3,8 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config();
+
 //missing import body parser 
 var bodyParser = require('body-parser');
 
@@ -11,34 +12,45 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
+app.post('/movies', function(req,res){
+    console.log(req.body.params)
+    axios.get(`http://www.omdbapi.com/?i=tt3896198&apikey=${process.env.MY_MOVIE_KEY}&s=${req.body.params}`).then(function(response){
+    res.send(response.data)
+  }); 
+})
+
+
 //missing closing parenthesis
 app.use('/', express.static(path.join(__dirname, 'public')));
 
-app.get('/favorites', function(req, res){
+app.get('/favorites', function (req, res) {
   var data = fs.readFileSync('./data.json');
   res.setHeader('Content-Type', 'application/json');
   res.send(data);
   ///missing closing parenthesis
 });
 
-app.post('/favorites', function(req, res){
-  if(!req.body.name || !req.body.oid){
-    res.send("Error");
-    //unnecessary return statement
-    //return
-    //missing curly brace at the end of the if statment
-  }
+app.post('/favorites', function (req, res) {
+  console.log(req.body)
+  //I do not get this data in my response
+  // if(!req.body.name || !req.body.oid){
+  //   res.send("Error");
+  //return
+  //missing curly brace at the end of the if statment
+  // }
   var data = JSON.parse(fs.readFileSync('./data.json'));
+  for (let i = 0; i < data.length; i++) {
+    if (data[i]["Title"] == req.body.Title) {
+      return res.send("duplicate title");
+    }
+  }
   data.push(req.body);
   fs.writeFile('./data.json', JSON.stringify(data));
   res.setHeader('Content-Type', 'application/json');
   res.send(data);
 });
 
-
-
-
-app.listen(3000, function(){
+app.listen(3000, function () {
   console.log("Listening on port 3000");
 });
 
