@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 
 </head>
+
 <body>
-                <input type="text" name="" id="movie">
-                <button type="submit" id="search">Search</button>
-                <p></p>
-                <script src="./index.js"></script>
+    <div class="container" style="padding:20px;">
+
+        <div class="row justify-content-md-center" style="text-align:center;">
+            <input type="text" name="" id="movie">
+            <button type="submit" id="search">Search</button>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
                 <ul id="movieResults"></ul>
                 <button type="submit" id="favorites">Show Favorites</button>
                 <ul id="listFavorites"></ul>
+            </div>
+            <div class="col-sm">
                 <div class="showDetail"></div>
-  
+            </div>
+        </div>
+
+    </div>
+    <script src="./index.js"></script>
 </body>
+
 </html>
