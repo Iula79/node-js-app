@@ -15,13 +15,15 @@ function retrieveMovie(){
 }
 
 function displayMovieList(arr){
-    let ul = document.querySelector('ul');
+    let ul = document.getElementById('movieResults');
     ul.innerHTML = '';
-    if(!arr){
+    if(!arr){ 
         return
     }
     arr.forEach(function(movie){
         listItem = document.createElement('li');
+        listItem.addEventListener('click', function(e){ e.preventDefault()
+            displayDetail(movie)})
         button = document.createElement('button');
         button.addEventListener('click', function(e){ e.preventDefault()
             favorite(movie)})
@@ -50,7 +52,7 @@ function retrieveFavorites(){
 }
 
 function displayFavorites(obj){
-    let ul = document.querySelector('ul');
+    let ul = document.getElementById('listFavorites');
     ul.innerHTML = '';
     obj.data.forEach(function(movie){
         listItem = document.createElement('li');
@@ -59,7 +61,21 @@ function displayFavorites(obj){
     })
 }
 
+function displayDetail(obj){
+    var title = document.createElement('h1');
+    var year = document.createElement('h2');
+    var poster = document.createElement('img');
 
+    title.innerHTML = obj.Title;
+    year.innerHTML = obj.Year;
+    poster.setAttribute('src', obj.Poster);
+    var div = document.getElementsByClassName('showDetail')[0]
+    div.innerHTML = ''
+    div.appendChild(title);
+    div.appendChild(year);
+    div.appendChild(poster);
+    return div
+}
 
 
 

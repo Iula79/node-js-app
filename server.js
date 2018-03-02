@@ -12,13 +12,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
+//moving the api call to the back end so that I can protect the api key
 app.post('/movies', function(req,res){
-    console.log(req.body.params)
     axios.get(`http://www.omdbapi.com/?i=tt3896198&apikey=${process.env.MY_MOVIE_KEY}&s=${req.body.params}`).then(function(response){
     res.send(response.data)
   }); 
 })
-
 
 //missing closing parenthesis
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -31,7 +30,6 @@ app.get('/favorites', function (req, res) {
 });
 
 app.post('/favorites', function (req, res) {
-  console.log(req.body)
   //I do not get this data in my response
   // if(!req.body.name || !req.body.oid){
   //   res.send("Error");
@@ -39,8 +37,9 @@ app.post('/favorites', function (req, res) {
   //missing curly brace at the end of the if statment
   // }
   var data = JSON.parse(fs.readFileSync('./data.json'));
+  //checking if the movie is already in favorites
   for (let i = 0; i < data.length; i++) {
-    if (data[i]["Title"] == req.body.Title) {
+    if (data[i]["imdbID"] == req.body.imdbID) {
       return res.send("duplicate title");
     }
   }
